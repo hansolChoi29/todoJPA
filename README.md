@@ -184,4 +184,5 @@ todos 테이블과 comments 테이블이 서로 연결(연관관계)을 맺고 �
 
 
 ```
+<img width="585" height="363" alt="스크린샷(10)" src="https://github.com/user-attachments/assets/393f41fe-63d1-45d7-af32-9f00ba30bd2a" />
 
