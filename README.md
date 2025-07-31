@@ -166,9 +166,9 @@ URL : DELETE/comments/{id}
 
 # ERD 
 
-todos 테이블과 comments 테이블이 서로 연결(연관관계)을 맺고 있다
-특히, 하나의 todo에 여러 개의 comment가 달릴 수 있다 (1:N 관계)
-일정(todos) 1개는 댓글(comments)을 여러 개
+todos 테이블과 comments 테이블이 서로 연결(연관관계)을 맺고 있다 </br>
+특히, 하나의 todo에 여러 개의 comment가 달릴 수 있다 (1:N 관계) </br>
+일정(todos) 1개는 댓글(comments)을 여러 개 </br>
 
 ```
 ┌────────────────────┐          ┌────────────────────────┐
