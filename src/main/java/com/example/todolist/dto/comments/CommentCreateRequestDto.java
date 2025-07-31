@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class CommentCreateRequestDto {
-    private Todo todo;
-    private String user_name;
+    private Long todoId;
+    private String userName;
     private String content;
 }

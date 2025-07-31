@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 @Service
 @RequiredArgsConstructor
-@RequestMapping("/todos")
 public class TodoService{
     private final TodoRepository todoRepository;
 

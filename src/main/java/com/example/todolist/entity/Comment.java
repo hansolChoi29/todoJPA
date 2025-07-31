@@ -20,7 +20,7 @@ public class Comment {
     private Todo todo;
 
     @Column(nullable = false)
-    private String user_name;
+    private String userName;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
@@ -30,11 +30,11 @@ public class Comment {
 
     public Comment(Todo todo, String userName, String content) {
         this.todo=todo;
-        this.user_name=userName;
+        this.userName =userName;
         this.content=content;
     }
 
-    public Comment(String user_name, String content) {
+    public Comment(String userName , String content) {
     }
 
     public void updateContent(String content) {
