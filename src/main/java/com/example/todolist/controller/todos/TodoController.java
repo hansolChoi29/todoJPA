@@ -1,9 +1,8 @@
-package com.example.todolist.controller;
+package com.example.todolist.controller.todos;
 
 
-import com.example.todolist.dto.TodoCreateRequestDto;
+import com.example.todolist.dto.todos.TodoCreateRequestDto;
 import com.example.todolist.entity.Todo;
-import com.example.todolist.repository.TodoRepository;
 import com.example.todolist.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
