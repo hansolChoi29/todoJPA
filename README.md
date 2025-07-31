@@ -6,16 +6,17 @@
     - URL: POST/todos
 ```json
 {
-  "writer": "한솔",
+  "userName": "한솔",
   "title": "JPA 공부하기",
   "content": "1단계 과제 끝내기"
 }
+
 ```
 응답 예시
 ```json
 {
   "id": 1,
-  "writer": "한솔",
+  "userName": "한솔",
   "title": "JPA 공부하기",
   "content": "1단계 과제 끝내기",
   "createdAt": "2025-07-31T13:00:00",
@@ -30,7 +31,7 @@
 ```json
 {
   "id": 1,
-  "writer": "한솔",
+  "userName": "한솔",
   "title": "JPA 공부하기",
   "content": "1단계 과제 끝내기",
   "createdAt": "2025-07-31T13:00:00",
@@ -54,7 +55,7 @@
 ```
 {
   "id": 1,
-  "writer": "한솔",
+  "userName": "한솔",
   "title": "JPA 마무리",
   "content": "1단계 완료하고 2단계 준비하기",
   "createdAt": "2025-07-31T13:00:00",
@@ -71,7 +72,7 @@
 │      todos             │
 ├────────────────────────┤
 │ id (PK)                │← 일정 ID (기본키)
-│ writer                 │← 작성자 이름
+│ userName                 │← 작성자 이름
 │ title                  │← 할 일 제목
 │ content                │← 내용
 │ created_at             │← 생성일
