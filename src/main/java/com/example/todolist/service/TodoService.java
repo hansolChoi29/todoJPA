@@ -4,11 +4,9 @@ import com.example.todolist.entity.Todo;
 import com.example.todolist.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 
 @Service
 @RequiredArgsConstructor
-@RequestMapping("/todos")
 public class TodoService{
     private final TodoRepository todoRepository;
 
