@@ -34,6 +34,9 @@ public class Comment {
         this.content=content;
     }
 
+    public Comment(String user_name, String content) {
+    }
+
     public void updateContent(String content) {
         this.content=content;
     }

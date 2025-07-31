@@ -1,4 +1,8 @@
 package com.example.todolist.repository;
 
-public class CommentRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import javax.xml.stream.events.Comment;
+
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 }
