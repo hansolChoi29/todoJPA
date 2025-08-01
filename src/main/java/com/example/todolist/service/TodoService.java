@@ -4,6 +4,7 @@ import com.example.todolist.dto.todos.TodoSummaryDto;
 import com.example.todolist.entity.Todo;
 import com.example.todolist.repository.CommentRepository;
 import com.example.todolist.repository.TodoRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class TodoService{
     private final TodoRepository todoRepository;
     private final CommentRepository commentRepository;
