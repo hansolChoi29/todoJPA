@@ -39,4 +39,15 @@ public class Todo {
         this.content = content;
         this.modifiedAt = LocalDateTime.now();
     }
+    @PrePersist
+    public void prePersist() {
+        LocalDateTime now = LocalDateTime.now();
+        this.createdDate = now;
+        this.modifiedAt = now;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.modifiedAt = LocalDateTime.now();
+    }
 }
