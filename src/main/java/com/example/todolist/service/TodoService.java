@@ -60,4 +60,12 @@ public class TodoService{
 
         return new PageImpl<>(dtoList, pageable, todosPage.getTotalElements());
     }
+
+    // 영속성 전이: 삭제 메서드
+    public void deleteTodo(Long id){
+        //영속성 컨텍스트에 Todo로드
+        Todo todo=getTodo(id);
+        //연관 댓글 함께 삭제;(삭제 호출: cascade/all + orphanRemoval)
+        todoRepository.delete(todo);
+    }
 }

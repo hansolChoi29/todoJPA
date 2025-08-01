@@ -43,4 +43,18 @@ public class TodoController {
     ) {
         return todoService.getTodoPaged(page, size);
     }
+
+
+    //영속성 전이: 삭제 엔드포인트
+
+    //신기한게, 댓글에 영속성 언급 안해줬는데 같이 삭제됨
+    // JPA 내부에서 Comment객체 cascade설정 때문에 함께 삭제 대상이 됨.
+
+    @DeleteMapping("/{id}")
+    public void deleteTodo(@PathVariable Long id) {
+        todoService.deleteTodo(id);
+    }
+    // todo DeleteMapping을 안만들어줬던 이유가
+    // todo삭제 시 commnet도 삭제되게 만들려는 의도였음
+
 }
