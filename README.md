@@ -2,164 +2,41 @@
 
 # API명세서(일정  CRU 기능기준)
 
-1.  일정 등록 (Create)
-    - URL: POST/todos
-```json
-{
-  "userName": "한솔",
-  "title": "JPA 공부하기",
-  "content": "1단계 과제 끝내기"
-}
 
-```
-응답 예시
-```json
-{
-  "id": 1,
-  "userName": "한솔",
-  "title": "JPA 공부하기",
-  "content": "1단계 과제 끝내기",
-  "createdAt": "2025-07-31T13:00:00",
-  "modifiedAt": "2025-07-31T13:00:00"
-}
-```
+스프링부트 + JPA 기반의 일정 관리 백엔드 API입니다.
+CRUD 기능을 단계별로 구현하면서 JPA의 연관관계, 지연 로딩(Lazy Loading), DTO 설계 등을 연습합니다.
 
 
-2. 일정 단건 조회(Read)
-  -  URL: GET/todos/{id}
+1.Todo
 
-```json
-{
-  "id": 1,
-  "userName": "한솔",
-  "title": "JPA 공부하기",
-  "content": "1단계 과제 끝내기",
-  "createdAt": "2025-07-31T13:00:00",
-  "modifiedAt": "2025-07-31T13:00:00"
-}
-```
+| Method   | URL           | 요청 Body                                                                                  | 응답 예시                                                                                                                                                                                                    | 설명                 |
+| -------- | ------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `POST`   | `/todos`      | `json { "ownerId": 1, "title": "JPA 공부", "content": "1단계 끝내기", "assigneeIds": [2, 3] } ` | `json { "id": 1, "title": "JPA 공부", "content": "1단계 끝내기", "ownerName": "한솔", "createdDate": "...", "modifiedAt": "...", "assignees": [ { "id": 2, "userName": "민지", "email": "minji@example.com" } ] } ` | 일정 등록 및 담당자 배정     |
+| `GET`    | `/todos/{id}` |                                                                                      | `json { "id": 1, "title": "JPA 공부", "content": "1단계 끝내기", "ownerName": "한솔", "createdDate": "...", "modifiedAt": "...", "assignees": [] } `                                                              | 일정 단건 조회 (담당자 포함)  |
+| `GET`    | `/todos`      |                                                                                      | `json [ { "id": 1, "title": "JPA 공부", "content": "...", "ownerName": "한솔", "createdDate": "...", "modifiedAt": "...", "commentCount": 2 } ] `                                                            | 일정 전체 조회 (담당자 제외됨) |
+| `PUT`    | `/todos/{id}` | `json { "title": "JPA 정리", "content": "2단계 시작" } `                                       | `json { "id": 1, "title": "JPA 정리", "content": "2단계 시작", "ownerName": "한솔", "createdDate": "...", "modifiedAt": "..." } `                                                                                | 일정 수정              |
+| `DELETE` | `/todos/{id}` |                                                                                      | 없음 (204 No Content 또는 메시지 반환 가능)                                                                                                                                                                         | 일정 삭제 (댓글도 함께 삭제됨) |
 
 
-3. 일정 수정(Update)
-  - URL: PUT/todos/{id}
 
-```json
-{
-  "title": "JPA 마무리",
-  "content": "1단계 완료하고 2단계 준비하기"
-}
+2. 댓글
+ 
+| Method   | URL              | 요청 Body                                                      | 응답 예시                                                                                                                                                                                                        | 설명       |
+| -------- | ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `POST`   | `/comments`      | `json { "todoId": 1, "userId": 2, "content": "좋은 일정이네요!" } ` | `json { "id": 1, "todo": { "id": 1, "title": "...", "content": "...", "createdDate": "...", "modifiedAt": "..." }, "authorName": "민지", "content": "좋은 일정이네요!", "createdDate": "...", "modifiedAt": "..." } ` | 댓글 등록    |
+| `GET`    | `/comments/{id}` |                                                       | `json { "id": 1, "authorName": "민지", "content": "...", "createdDate": "...", "modifiedAt": "..." } `                                                                                                         | 댓글 단건 조회 |
+| `GET`    | `/comments`      |                                                          | `json [ { "id": 1, "authorName": "민지", "content": "좋아요", ... }, { "id": 2, "authorName": "한솔", "content": "감사합니다", ... } ] `                                                                                 | 댓글 전체 조회 |
+| `PUT`    | `/comments/{id}` | `json { "content": "수정된 댓글입니다!" } `                          | `json { "id": 1, "authorName": "민지", "content": "수정된 댓글입니다!", "createdDate": "...", "modifiedAt": "..." } `                                                                                                  | 댓글 수정    |
+| `DELETE` | `/comments/{id}` |                                                          | `json { "message": "댓글이 성공적으로 삭제되었습니다." } `                                                                                                                                                                  | 댓글 삭제    |
 
-```
+3. 유저
 
-응답 예시
-```
-{
-  "id": 1,
-  "userName": "한솔",
-  "title": "JPA 마무리",
-  "content": "1단계 완료하고 2단계 준비하기",
-  "createdAt": "2025-07-31T13:00:00",
-  "modifiedAt": "2025-07-31T14:00:00"
-}
-```
+| Method   | URL           | 요청 Body                                                     | 응답 예시                                                                                                           | 설명       |
+| -------- | ------------- | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | -------- |
+| `POST`   | `/users`      | `json { "userName": "한솔", "email": "hansol@example.com" } ` | `json { "id": 1, "userName": "한솔", "email": "hansol@example.com", "createdDate": "...", "modifiedAt": "..." } ` | 유저 생성    |
+| `GET`    | `/users/{id}` |                                                   | 위와 동일                                                                                                           | 유저 단건 조회 |
+| `DELETE` | `/users/{id}` |                                                      | 없음 또는 메시지                                                                                                       | 유저 삭제    |
 
-# API명세서(댓글  CRUD 기능기준)
-
-
-1. 댓글 등록(Create)
-  - URL: POST /comments
-```json
-{
-  "todoId": 1,
-  "userName": "한솔",
-  "content": "좋은 일정이네요!"
-}
-
-```
-응답예시
-```json
-{
-  "id": 1,
-  "todoId": 1,
-  "userName": "민지",
-  "content": "좋은 일정이네요!",
-  "createdAt": "2025-08-01T10:00:00",
-  "modifiedAt": "2025-08-01T10:00:00"
-}
-```
-
-
-2. 댓글 단건 조회(Read)
-URL: GET/comments/{id}
-응답 예시
-```json
-{
-  "id": 1,
-  "todoId": 1,
-  "userName": "한솔",
-  "content": "좋은 일정이네요!",
-  "createdAt": "2025-08-01T10:00:00",
-  "modifiedAt": "2025-08-01T10:00:00"
-}
-```
-
-
-3. 댓글 전체 조회(Read All)
-URL: GET /comments
-응답 예시
-```json
-[
-  {
-    "id": 1,
-    "todoId": 1,
-    "userName": "민지",
-    "content": "좋은 일정이네요!",
-    "createdAt": "2025-08-01T10:00:00",
-    "modifiedAt": "2025-08-01T10:00:00"
-  },
-  {
-    "id": 2,
-    "todoId": 1,
-    "userName": "한솔",
-    "content": "감사합니다!",
-    "createdAt": "2025-08-01T11:00:00",
-    "modifiedAt": "2025-08-01T11:00:00"
-  }
-]
-```
-
-
-4. 댓글 수정 (Update)
-
-- URL : PUT /comments/{id}
-```json
-{
-  "content": "수정된 댓글입니다!"
-}
-```
-
-- 응답예시
-```json
-{
-  "id": 1,
-  "todoId": 1,
-  "userName": "민지",
-  "content": "수정된 댓글입니다!",
-  "createdAt": "2025-08-01T10:00:00",
-  "modifiedAt": "2025-08-01T12:00:00"
-}
-```
-
-
-5. 댓글 삭제(Delete)
-URL : DELETE/comments/{id}
-
-응답예시
-```json
-{
-  "message": "댓글이 성공적으로 삭제되었습니다."
-}
-```
 
 
 ---
