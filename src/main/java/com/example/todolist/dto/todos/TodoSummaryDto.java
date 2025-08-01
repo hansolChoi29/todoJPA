@@ -16,17 +16,13 @@ public class TodoSummaryDto {
     private String modifiedAt;
     private long commentCount;
 
-    public TodoSummaryDto(Long id, String title, String content, String writer,
-                          LocalDateTime createdAt, LocalDateTime modifiedAt, long commentCount) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.userName = userName;
-        this.createdDate = createdAt == null ? null : createdAt.toString();
-        this.modifiedAt = modifiedAt == null ? null : modifiedAt.toString();
+    public TodoSummaryDto(Todo todo, long commentCount) {
+        this.id = todo.getId();
+        this.title = todo.getTitle();
+        this.content = todo.getContent();
+        this.userName = todo.getUserName();
+        this.createdDate = todo.getCreatedDate() == null ? null : todo.getCreatedDate().toString();
+        this.modifiedAt = todo.getModifiedAt() == null ? null : todo.getModifiedAt().toString();
         this.commentCount = commentCount;
-    }
-
-    public TodoSummaryDto(Todo todo, Long orDefault) {
     }
 }

@@ -39,6 +39,8 @@ public class Todo {
         this.content = content;
         this.modifiedAt = LocalDateTime.now();
     }
+
+    //엔티티의 생명주기 콜백을 넣어 null도 반환되는 문제 해결.
     @PrePersist
     public void prePersist() {
         LocalDateTime now = LocalDateTime.now();
