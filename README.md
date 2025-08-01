@@ -165,24 +165,6 @@ URL : DELETE/comments/{id}
 ---
 
 # ERD 
+<img width="475" height="762" alt="스크린샷(16)" src="https://github.com/user-attachments/assets/9a6b7f74-97a2-4f1a-ba7d-0e8bd090a1bb" />
 
-todos 테이블과 comments 테이블이 서로 연결(연관관계)을 맺고 있다 </br>
-특히, 하나의 todo에 여러 개의 comment가 달릴 수 있다 (1:N 관계) </br>
-일정(todos) 1개는 댓글(comments)을 여러 개 </br>
-
-```
-┌────────────────────┐          ┌────────────────────────┐
-│     todos          │◄───────▶│        comments         │
-├────────────────────┤          ├────────────────────────┤
-│ id (PK)            │          │ id (PK)                │
-│ userName           │          │ todo_id (FK)           │
-│ title              │          │ userName               │
-│ content            │          │ content                │
-│ created_at         │          │ created_at             │
-│ modified_at        │          │ modified_at            │
-└────────────────────┘          └────────────────────────┘
-
-
-```
-<img width="585" height="363" alt="스크린샷(10)" src="https://github.com/user-attachments/assets/393f41fe-63d1-45d7-af32-9f00ba30bd2a" />
 
