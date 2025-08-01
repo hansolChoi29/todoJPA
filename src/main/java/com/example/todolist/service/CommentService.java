@@ -8,6 +8,8 @@ import com.example.todolist.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class
@@ -40,4 +42,11 @@ CommentService {
         Comment comment=getComment(commentId);
         commentRepository.delete(comment);
     }
+
+    //전체조회
+    public List<Comment> getAllComments() {
+        return commentRepository.findAll();
+    }
+
+
 }

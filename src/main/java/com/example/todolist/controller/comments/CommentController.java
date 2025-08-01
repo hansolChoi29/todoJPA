@@ -5,10 +5,13 @@ import com.example.todolist.dto.comments.CommentCreateRequestDto;
 import com.example.todolist.dto.comments.CommentResponseDto;
 import com.example.todolist.dto.comments.CommentUpdateRequestDto;
 import com.example.todolist.entity.Comment;
+import com.example.todolist.repository.CommentRepository;
 import com.example.todolist.service.CommentService;
 import com.example.todolist.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +33,15 @@ public class CommentController {
         Comment comment = commentService.getComment(commentId);
         return new CommentResponseDto(comment);
     }
+
+    //전체 조회
+    @GetMapping
+    public List<CommentResponseDto> getAllComments() {
+        return commentService.getAllComments().stream()
+                .map(CommentResponseDto::new)
+                .toList();
+    }
+
 
 
     @PutMapping("/{id}")
