@@ -2,6 +2,7 @@ package com.example.todolist.controller;
 
 
 import com.example.todolist.dto.TodoCreateRequestDto;
+import com.example.todolist.dto.TodoResponseDto;
 import com.example.todolist.entity.Todo;
 import com.example.todolist.repository.TodoRepository;
 import com.example.todolist.service.TodoService;
@@ -16,20 +17,19 @@ public class TodoController {
 
 
     @PostMapping
-    public Todo create(@RequestBody TodoCreateRequestDto requestDto) {
-        return todoService.createTodo(
-                requestDto.getUserName(),
-                requestDto.getTitle(),
-                requestDto.getContent()
-        );
+    public TodoResponseDto create(@RequestBody TodoCreateRequestDto dto) {
+       Todo saved=todoService.createTodo(dto.getUserName(), dto.getTitle(),dto.getContent());
+       return new TodoResponseDto(saved);
     }
     @GetMapping("/{id}")
-    public  Todo getTodo(@PathVariable Long id) {
-        return todoService.getTodo(id);
+    public  TodoResponseDto getTodo(@PathVariable Long id) {
+        Todo todo=todoService.getTodo(id);
+        return new TodoResponseDto(todo);
     }
 
     @PutMapping("/{id}")
-    public Todo updatetodo(@PathVariable Long id, @RequestBody TodoCreateRequestDto requestDto) {
-        return todoService.updateTodo(id,requestDto.getUserName(), requestDto.getTitle(), requestDto.getContent());
+    public TodoResponseDto updatetodo(@PathVariable Long id, @RequestBody TodoCreateRequestDto requestDto) {
+        Todo update=todoService.updateTodo(id, requestDto.getUserName(), requestDto.getTitle(), requestDto.getContent());
+        return new TodoResponseDto(update);
     }
 }
