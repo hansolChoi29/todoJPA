@@ -12,7 +12,7 @@ public class TodoSummaryDto {
     private Long id;
     private String title;
     private String content;
-    private User ownerName;
+    private String ownerName;
     private String createdDate;
     private String modifiedAt;
     private long commentCount;
@@ -21,7 +21,7 @@ public class TodoSummaryDto {
         this.id = todo.getId();
         this.title = todo.getTitle();
         this.content = todo.getContent();
-        this.ownerName = todo.getOwner();
+        this.ownerName = todo.getOwner().getUserName();
         this.createdDate = todo.getCreatedDate() == null ? null : todo.getCreatedDate().toString();
         this.modifiedAt = todo.getModifiedAt() == null ? null : todo.getModifiedAt().toString();
         this.commentCount = commentCount;

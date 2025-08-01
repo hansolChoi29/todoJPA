@@ -18,6 +18,8 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany(mappedBy = "todo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TodoAssignment> assignments = new ArrayList<>();
 
 //    작성자
     @ManyToOne(fetch = FetchType.LAZY)

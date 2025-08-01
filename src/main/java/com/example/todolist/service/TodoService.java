@@ -48,7 +48,7 @@ public class TodoService{
     }
 
     public Todo getTodo(Long id) {
-        return todoRepository.findById(id)
+        return todoRepository.findByIdWithAssignees(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 일정이 없습니다."));
     }
 
@@ -96,4 +96,7 @@ public class TodoService{
         //연관 댓글 함께 삭제;(삭제 호출: cascade/all + orphanRemoval)
         todoRepository.delete(todo);
     }
+
+
+
 }
