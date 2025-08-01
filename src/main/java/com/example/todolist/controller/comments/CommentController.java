@@ -42,4 +42,9 @@ public class CommentController {
         );
         return new CommentResponseDto(updated);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteComment(@PathVariable("id") Long commentId) {
+        commentService.deleteComment(commentId);
+    }
 }

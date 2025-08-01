@@ -35,4 +35,9 @@ CommentService {
         return commentRepository.save(comment);
 
     }
+
+    public void deleteComment(Long commentId) {
+        Comment comment=getComment(commentId);
+        commentRepository.delete(comment);
+    }
 }
