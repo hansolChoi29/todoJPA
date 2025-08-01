@@ -1,10 +1,13 @@
 # todoJPA project
 
-# API명세서(일정  CRU 기능기준)
-
 
 스프링부트 + JPA 기반의 일정 관리 백엔드 API입니다.
 CRUD 기능을 단계별로 구현하면서 JPA의 연관관계, 지연 로딩(Lazy Loading), DTO 설계 등을 연습합니다.
+
+
+# API명세서(일정  CRU 기능기준)
+
+
 
 
 1.Todo
