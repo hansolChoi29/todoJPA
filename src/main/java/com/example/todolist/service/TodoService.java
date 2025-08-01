@@ -28,7 +28,7 @@ public class TodoService{
         return todoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 일정이 없습니다."));
     }
-
+//커밋용
     public Todo updateTodo(Long id,String userName, String title, String content) {
         Todo todo = getTodo(id); // 재사용
         todo.update(userName,title, content);
