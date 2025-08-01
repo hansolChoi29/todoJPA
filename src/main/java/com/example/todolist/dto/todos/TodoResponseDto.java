@@ -2,28 +2,24 @@ package com.example.todolist.dto.todos;
 
 
 import com.example.todolist.entity.Todo;
-import com.example.todolist.entity.User;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
-
 @Getter
-public class TodoSummaryDto {
+//단건 조회, 생성 응답, 수정응답에 쓰이는 DTO
+public class TodoResponseDto {
     private Long id;
     private String title;
     private String content;
-    private User ownerName;
+    private String ownerName;
     private String createdDate;
     private String modifiedAt;
-    private long commentCount;
 
-    public TodoSummaryDto(Todo todo, long commentCount) {
+    public TodoResponseDto(Todo todo) {
         this.id = todo.getId();
         this.title = todo.getTitle();
         this.content = todo.getContent();
-        this.ownerName = todo.getOwner();
+        this.ownerName = todo.getOwner().getUserName();
         this.createdDate = todo.getCreatedDate() == null ? null : todo.getCreatedDate().toString();
         this.modifiedAt = todo.getModifiedAt() == null ? null : todo.getModifiedAt().toString();
-        this.commentCount = commentCount;
     }
 }

@@ -2,6 +2,7 @@ package com.example.todolist.controller.todos;
 
 
 import com.example.todolist.dto.todos.TodoCreateRequestDto;
+import com.example.todolist.dto.todos.TodoResponseDto;
 import com.example.todolist.dto.todos.TodoSummaryDto;
 import com.example.todolist.entity.Todo;
 import com.example.todolist.service.TodoService;
@@ -19,20 +20,27 @@ public class TodoController {
     @PostMapping
     public Todo create(@RequestBody TodoCreateRequestDto requestDto) {
         return todoService.createTodo(
-                requestDto.getUserName(),
+                requestDto.getOwnerId(),
                 requestDto.getTitle(),
-                requestDto.getContent()
+                requestDto.getContent(), requestDto.getAssigneeIds()
         );
     }
 
     @GetMapping("/{id}")
-    public  Todo getTodo(@PathVariable Long id) {
-        return todoService.getTodo(id);
+    public TodoResponseDto getTodo(@PathVariable Long id) {
+        Todo todo = todoService.getTodo(id);
+        return new TodoResponseDto(todo);
     }
 
     @PutMapping("/{id}")
-    public Todo updatetodo(@PathVariable Long id, @RequestBody TodoCreateRequestDto requestDto) {
-        return todoService.updateTodo(id,requestDto.getUserName(), requestDto.getTitle(), requestDto.getContent());
+    public TodoResponseDto updatetodo(@PathVariable Long id, @RequestBody TodoCreateRequestDto requestDto) {
+        Todo updated = todoService.updateTodo(
+                id,
+                requestDto.getOwnerId(),
+                requestDto.getTitle(),
+                requestDto.getContent()
+        );
+        return new TodoResponseDto(updated);
     }
 
     //페이징된 일정 조회(댓글개수 포함, 수정일 내림차순)

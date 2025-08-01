@@ -5,6 +5,5 @@ import lombok.Getter;
 
 @Getter
 public class CommentUpdateRequestDto {
-    private String userName;
     private String content;
 }

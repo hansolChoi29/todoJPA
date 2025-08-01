@@ -18,8 +18,14 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String userName;
+
+//    작성자
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User owner;
+
+//    @Column(nullable = false)
+//    private String userName;
 
     @Column(nullable = false)
     private String title;
@@ -30,13 +36,12 @@ public class Todo {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedAt;
 
-    public Todo(String userName, String title, String content) {
-        this.userName = userName;
+    public Todo(User owner, String title, String content) {
+        this.owner = owner;
         this.title=title;
         this.content=content;
     }
-    public void update( String userName, String title, String content) {
-        this.userName = userName;
+    public void update(  String title, String content) {
         this.title = title;
         this.content = content;
         this.modifiedAt = LocalDateTime.now();

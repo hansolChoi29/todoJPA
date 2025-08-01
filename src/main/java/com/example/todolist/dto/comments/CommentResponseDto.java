@@ -9,14 +9,14 @@ public class CommentResponseDto {
     private final String modifiedAt;
     private Long id;
     private TodoDto todo;
-    private String userName;
+    private String authorName;
     private String content;
     private String createdDate;
 
     public CommentResponseDto(Comment comment) {
         this.id = comment.getId();
         this.todo = new TodoDto(comment.getTodo());
-        this.userName = comment.getUserName();
+        this.authorName = comment.getAuthor().getUserName();
         this.content = comment.getContent();
         this.createdDate = comment.getCreatedDate() == null ? null : comment.getCreatedDate().toString();
         this.modifiedAt = comment.getModifiedAt() == null ? null : comment.getModifiedAt().toString();
@@ -26,7 +26,6 @@ public class CommentResponseDto {
     @Getter
     public static class TodoDto {
         private Long id;
-        private String userName;
         private String title;
         private String content;
         private String createdDate;
@@ -34,7 +33,6 @@ public class CommentResponseDto {
 
         public TodoDto(com.example.todolist.entity.Todo todo) {
             this.id = todo.getId();
-            this.userName = todo.getUserName();
             this.title = todo.getTitle();
             this.content = todo.getContent();
             this.createdDate = todo.getCreatedDate() == null ? null : todo.getCreatedDate().toString();

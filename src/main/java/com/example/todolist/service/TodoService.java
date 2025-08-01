@@ -2,8 +2,13 @@ package com.example.todolist.service;
 
 import com.example.todolist.dto.todos.TodoSummaryDto;
 import com.example.todolist.entity.Todo;
+import com.example.todolist.entity.TodoAssignment;
+import com.example.todolist.entity.User;
 import com.example.todolist.repository.CommentRepository;
+import com.example.todolist.repository.TodoAssignmentRepository;
 import com.example.todolist.repository.TodoRepository;
+import com.example.todolist.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
@@ -20,20 +25,41 @@ import java.util.stream.Collectors;
 public class TodoService{
     private final TodoRepository todoRepository;
     private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
+    private final TodoAssignmentRepository assignmentRepository;
 
-    public Todo createTodo(String userName, String title, String content) {
-        Todo todo = new Todo(userName, title, content);
-        return todoRepository.save(todo);
+    public Todo createTodo(Long ownerId, String title, String content, List<Long> assigneeIds) {
+        User owner = userRepository.findById(ownerId)
+                .orElseThrow(() -> new IllegalArgumentException("작성자 유저가 없습니다."));
+        Todo todo = new Todo(owner, title, content);
+        todo = todoRepository.save(todo);
+
+        if (assigneeIds != null) {
+            for (Long uid : assigneeIds) {
+                if (assignmentRepository.existsByTodoIdAndAssignedUserId(todo.getId(), uid)) continue;
+                User assignee = userRepository.findById(uid)
+                        .orElseThrow(() -> new IllegalArgumentException("담당자 유저가 없습니다: " + uid));
+                TodoAssignment assignment = new TodoAssignment(todo, assignee);
+                assignmentRepository.save(assignment);
+            }
+        }
+
+        return todo;
     }
 
     public Todo getTodo(Long id) {
         return todoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 일정이 없습니다."));
     }
-//커밋용
-    public Todo updateTodo(Long id,String userName, String title, String content) {
-        Todo todo = getTodo(id); // 재사용
-        todo.update(userName,title, content);
+
+
+    public Todo updateTodo(Long id,Long ownerId, String title, String content) {
+        Todo todo = getTodo(id);
+        if (ownerId != null) {
+            User owner = userRepository.findById(ownerId)
+                    .orElseThrow(() -> new IllegalArgumentException("작성자 유저가 없습니다."));
+        }
+        todo.update(title, content);
         return todoRepository.save(todo);
     }
 

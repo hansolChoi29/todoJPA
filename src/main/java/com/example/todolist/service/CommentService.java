@@ -3,8 +3,10 @@ package com.example.todolist.service;
 
 import com.example.todolist.entity.Comment;
 import com.example.todolist.entity.Todo;
+import com.example.todolist.entity.User;
 import com.example.todolist.repository.CommentRepository;
 import com.example.todolist.repository.TodoRepository;
+import com.example.todolist.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +18,15 @@ public class
 CommentService {
     private final CommentRepository commentRepository;
     private final TodoRepository todoRepository;
+    private final UserRepository userRepository;
 
-    public Comment createComment(Long todoId, String userName , String content) {
+    public Comment createComment(Long todoId, Long userId, String content) {
         Todo todo = todoRepository.findById(todoId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 일정이 없습니다."));
-        Comment comment = new Comment(todo, userName , content);
+
+        User author = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("작성자 유저가 없습니다."));
+        Comment comment = new Comment(todo, author, content);
         return commentRepository.save(comment);
     }
 
@@ -31,9 +37,9 @@ CommentService {
     }
 
 
-    public Comment updateComment(Long commentId,String userName, String content) {
+    public Comment updateComment(Long commentId, String content) {
         Comment comment=getComment(commentId);
-        comment.update(userName,content);
+        comment.update(content);
         return commentRepository.save(comment);
 
     }

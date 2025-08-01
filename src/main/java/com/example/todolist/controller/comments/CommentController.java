@@ -21,12 +21,13 @@ public class CommentController {
     private final TodoService todoService;
 
     @PostMapping
-    public Comment create(@RequestBody CommentCreateRequestDto requestDto){
-        return commentService.createComment(
+    public CommentResponseDto  create(@RequestBody CommentCreateRequestDto requestDto){
+        Comment comment = commentService.createComment(
                 requestDto.getTodoId(),
-                requestDto.getUserName(),
+                requestDto.getUserId(),
                 requestDto.getContent()
         );
+        return new CommentResponseDto(comment);
     }
     @GetMapping("/{id}")
     public CommentResponseDto getComment(@PathVariable("id") Long commentId){
@@ -49,7 +50,6 @@ public class CommentController {
                                             @RequestBody CommentUpdateRequestDto requestDto) {
         Comment updated = commentService.updateComment(
                 commentId,
-                requestDto.getUserName(),
                 requestDto.getContent()
         );
         return new CommentResponseDto(updated);

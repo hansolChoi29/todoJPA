@@ -15,12 +15,21 @@ public class Comment {
     @GeneratedValue
     private Long id;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "todo_id", nullable = false)
+//    private Todo todo;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "todo_id", nullable = false)
     private Todo todo;
 
-    @Column(nullable = false)
-    private String userName;
+//    @Column(nullable = false)
+//    private String userName;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User author;
+
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
@@ -28,15 +37,14 @@ public class Comment {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedAt;
 
-    public Comment(Todo todo, String userName, String content) {
+    public Comment(Todo todo, User author, String content) {
         this.todo=todo;
-        this.userName =userName;
+        this.author =author;
         this.content=content;
     }
 
 
-    public void update(String userName,String content) {
-        this.userName=userName;
+    public void update(String content) {
         this.content=content;
         this.modifiedAt = LocalDateTime.now();
     }
@@ -49,7 +57,6 @@ public class Comment {
     }
     @PreUpdate
     public void preUpdate() {
-        LocalDateTime now = LocalDateTime.now();
-        this.modifiedAt = now;
+        this.modifiedAt = LocalDateTime.now();
     }
 }
