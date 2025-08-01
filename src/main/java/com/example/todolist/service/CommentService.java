@@ -21,4 +21,18 @@ CommentService {
         Comment comment = new Comment(todo, userName , content);
         return commentRepository.save(comment);
     }
+
+
+    public Comment getComment(Long commentId) {
+        return commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 댓글이 없습니다."));
+    }
+
+
+    public Comment updateComment(Long commentId,String userName, String content) {
+        Comment comment=getComment(commentId);
+        comment.update(userName,content);
+        return commentRepository.save(comment);
+
+    }
 }

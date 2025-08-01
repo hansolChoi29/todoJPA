@@ -34,10 +34,22 @@ public class Comment {
         this.content=content;
     }
 
-    public Comment(String userName , String content) {
+
+    public void update(String userName,String content) {
+        this.userName=userName;
+        this.content=content;
+        this.modifiedAt = LocalDateTime.now();
     }
 
-    public void updateContent(String content) {
-        this.content=content;
+    @PrePersist
+    public void prePersist() {
+        LocalDateTime now = LocalDateTime.now();
+        this.createdDate = now;
+        this.modifiedAt = now;
+    }
+    @PreUpdate
+    public void preUpdate() {
+        LocalDateTime now = LocalDateTime.now();
+        this.modifiedAt = now;
     }
 }
